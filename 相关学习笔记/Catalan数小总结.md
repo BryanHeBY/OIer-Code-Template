@@ -1,15 +1,15 @@
 # Catalan数小总结
 卡特兰(Catalan)数，是组合数学中一个常出现在各种计数问题中的数列，在信息学奥赛的递推专栏中有着重要地位，下面是我对Catalan数的一些浅薄见解。
-## 递推式![Catalan数递推式](http://m.qpic.cn/psb?/V12cKJ7X1u7O9B/isk05ivOo*M4GRHhTBXXj1vg4FD92SOVQxtBxHBupdQ!/b/dEUBAAAAAAAA&bo=QgPxAQAAAAADB5M!&rf=viewer_4)
+## 递推式![Catalan数递推式](pictures/Catalan数小总结1.png)
  以上是Catalan数的一些常用递推式，下面我们对其推导过程进行探究。
  ## Catalan数推导过程
  ### 从模型角度
  1. 剖分三角形
  
  问题原型：给一个凸n边形，用n-3条对角线分成n-2个三角形，共有多少种分法？
- ![剖分三角形](http://a2.qpic.cn/psb?/V12cKJ7X1u7O9B/lJfQIlExs5EeOqJh7dpr.ZSeMYR1SLFv8ehkK5Y6hIw!/m/dC0BAAAAAAAAnull&bo=HwLOAAAAAAARB.M!&rf=photolist&t=5)
- ![pf2](http://m.qpic.cn/psb?/V12cKJ7X1u7O9B/LXQnBEi3rR5KhzyjQUEgSlRZIbhJ.3NTjrsmp0oNSR0!/b/dDEBAAAAAAAA&bo=wwO3AQAAAAADB1Q!&rf=viewer_4)
- ![pf3](http://m.qpic.cn/psb?/V12cKJ7X1u7O9B/auzt4SVqgCNphz0xdhF7BtRutwfs67ROg9V.WS9h5HE!/b/dEABAAAAAAAA&bo=3gNFAwAAAAADB7k!&rf=viewer_4)
+ ![剖分三角形](pictures/Catalan数小总结2.webp)
+ ![pf2](pictures/Catalan数小总结3.png)
+ ![pf3](pictures/Catalan数小总结4.png)
  由上式观察得，h(n)=C(n+2)，递推式1、4得证。
  
  
@@ -24,9 +24,9 @@
 ### 从数学角度
 下面我们从数学角度推导以上递推式的等价一致性。
 #### 3⇔4：
-![34](http://m.qpic.cn/psb?/V12cKJ7X1u7O9B/X9RpusLMJQhP*69KYEOaxR4P51wILCRM0AbSm.7v5c0!/b/dDMBAAAAAAAA&bo=1AF8AgAAAAADF5k!&rf=viewer_4)
+![34](pictures/Catalan数小总结5.png)
 #### 4⇔2：
-![42](http://m.qpic.cn/psb?/V12cKJ7X1u7O9B/UhhthTfn7u6ZlGQ*uyy4HoF2NF15Rr9LLNVylylrYGc!/b/dEYBAAAAAAAA&bo=VQKcAgAAAAADB.s!&rf=viewer_4)
+![42](pictures/Catalan数小总结6.png)
 #### 1⇔4：
 
 f(n)=f(0)*f(n-1-0)+f(1)*(n-1-1)+f(2)*f(n-1-2)+.+f(n-1-0)*f(0)
