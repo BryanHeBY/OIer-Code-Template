@@ -36,25 +36,4 @@ int main()
 	return 0;
 }
 
-/*
- * new_version
-void get_nextn(){
-    int j=0;
-    F(i,2,lpat){
-        while(j&&pat[j+1]!=pat[i])j=nextn[j];
-        if(pat[j+1]==pat[i])j++;
-        nextn[i]=j;
-    }
-}
-
-void get_f(){
-    int j=0;
-    F(i,1,ls){
-        while(j&&pat[j+1]!=s[i])j=nextn[j];
-        if(pat[j+1]==s[i])j++;
-        f[i]=j;
-    }
-}
-*/
-
 
