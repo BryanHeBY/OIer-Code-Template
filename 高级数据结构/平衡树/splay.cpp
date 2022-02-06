@@ -20,7 +20,7 @@ struct tree
         {
             int y=fa[x],z=fa[y];
             if(z!=goal)
-                (x==ch[x][1])^(y==ch[z][1])?rotate(x):rotate(y);
+                (x==ch[y][1])^(y==ch[z][1])?rotate(x):rotate(y);
             rotate(x);
         }
         if(!goal)root=x;
