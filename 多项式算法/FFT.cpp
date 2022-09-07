@@ -1,61 +1,69 @@
 #include<bits/stdc++.h>
-const int N=5e6+5;
+#define F(i,l,r) for(int i=l;i<=r;++i)
+#define DF(i,r,l) for(int i=r;i>=l;--i)
+typedef long long ll;
+typedef long double ld;
+using namespace std;
+const int N=2e6+5;
 const double pi=acos(-1);
+typedef complex<double> cp; 
+
 int bt[N];
-inline int read();
-struct z
-{
-    double x,y;
-    z(double xx=0,double yy=0){x=xx,y=yy;}
-}w[N],f[2][N],t[N];
-z operator + (z a,z b){return z(a.x+b.x,a.y+b.y);}
-z operator - (z a,z b){return z(a.x-b.x,a.y-b.y);}
-z operator * (z a,z b){return z(a.x*b.x-a.y*b.y,a.x*b.y+a.y*b.x);}
-z judge(z a,bool type){return type?a:z(a.x,-a.y);}
-int n,m,limit,md;
-void init()
-{
-    n=read(),m=read();
-    for(int i=0;i<=n;i++)f[0][i].x=read();
-    for(int i=0;i<=m;i++)f[1][i].x=read();
-    limit=1;
-    while(limit<=n+m)limit<<=1,md++;
-    w[0]=z(1),w[1]=z(cos(2*pi/limit),sin(2*pi/limit));
-    for(int i=2;i<limit;i++)w[i]=w[i-1]*w[1];
-    for(int i=1;i<limit;i++)
-        bt[i]=(bt[i>>1]>>1)|((i&1)?(1<<(md-1)):0);
+cp w[N],t[N];
+void init(int limit, int md) {
+    F(i,0,limit)w[i]=cp(cos(2*pi*i/limit),sin(2*pi*i/limit));
+    F(i,1,limit-1)bt[i]=(bt[i>>1]>>1)|((i&1)?(1<<(md-1)):0);
 }
-
-void dft(z *a,bool type)
-{
-    for(int i=0;i<limit;i++)t[i]=a[bt[i]];
-    for(int i=md-1;i>=0;i--)
-        for(int j=0;j<(1<<i);j++)
-            for(int k=0;k<(limit>>(i+1));k++)
-    {
+void dft(vector<cp> &a,int limit,int md,bool type){
+    F(i,0,limit-1)t[i]=a[bt[i]];
+    DF(i,md-1,0)F(j,0,(1<<i)-1)F(k,0,(limit>>(i+1))-1){
         int t1=j*(limit>>i)+k,t2=t1+(limit>>(i+1));
-        z z1=t[t1],z2=t[t2]*judge(w[k<<i],type);
-        t[t1]=z1+z2,t[t2]=z1-z2;
+        cp s1=t[t1],s2=t[t2]*(type?w[k<<i]:w[limit-(k<<i)]);
+        t[t1]=s1+s2,t[t2]=s1-s2;
     }
-    for(int i=0;i<limit;i++)a[i]=t[i];
+    F(i,0,limit-1)a[i]=t[i];
+    if(!type)F(i,0,limit-1)a[i]/=limit;
 }
 
-int main()
-{
-    init();
-    dft(f[0],1),dft(f[1],1);
-    for(int i=0;i<=limit;i++)f[0][i]=f[0][i]*f[1][i];
-    dft(f[0],0);
-    for(int i=0;i<=n+m;i++)printf("%d ",(int)(f[0][i].x/limit+0.5));
+struct P{
+    int n;
+    vector<cp> f;
+    P(int n):n(n) {f.resize(n+1);}
+    P(int n, const P &b):P(n){
+        F(i,0,min(b.n,n))f[i]=b.f[i];
+        F(i,b.n+1,n)f[i]=0;
+    }
+    void reset(int newn){
+        int pre=n;
+        n=newn;
+        f.resize(newn+1);
+        if(pre<newn)F(i,pre+1,newn)f[i]=0;
+    }
+
+    void print(){
+        F(i,0,n)cout<<(ll)(f[i].real()+0.5)<<" ";
+        cout<<endl;
+    }
+
+    cp &operator[](int i) {return f[i];}
+    P operator *(P &b) {
+        int limit=1,md=0;
+        while(limit<=n+b.n)limit<<=1,md++;
+        init(limit,md);
+        P f1(limit-1,*this),f2(limit-1,b);
+        dft(f1.f,limit,md,1),dft(f2.f,limit,md,1);
+        F(i,0,limit-1)f1[i]=f1[i]*f2[i];
+        dft(f1.f,limit,md,0);
+        f1.reset(n+b.n);
+        return f1;
+    }
+};
+
+int main(){
+    P f1(1),f2(0);
+    f1[0]=1,f1[1]=1;
+    f2[0]=1;
+    F(i,1,7)f2=f2*f1;
+    f2.print();
     return 0;
-}
-
-inline int read()
-{
-    int n=0,f=1;
-    char s;
-    while(((s=getchar())<'0'||s>'9')&&s!='-');
-    if(s=='-')f=-1,s=getchar();
-    do{n=(n<<1)+(n<<3)+(s^48);}while((s=getchar())>='0'&&s<='9');
-    return n*f;
 }
